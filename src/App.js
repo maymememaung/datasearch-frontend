@@ -1,25 +1,9 @@
 import './App.css';
-import {useEffect, useState} from 'react';
-import {MainTable} from "./components/MainTable"
-import {SearchBar} from "./components/SearchBar"
+import { useEffect, useState } from 'react';
+import { MainTable } from "./components/MainTable"
+import { SearchBar } from "./components/SearchBar"
 
 function App() {
-
-    const dummyRecords = [
-        {
-            "id": 2,
-            "name": "Macbook",
-            "quantity": 9,
-            "brand_id": 1,
-            "category_id": 1
-        }, {
-            "id": 1,
-            "name": "Water Bottle",
-            "quantity": 3,
-            "brand_id": 3,
-            "category_id": 2
-        }
-    ]
 
     const [query, setQuery] = useState("")
     const [filter, setFilter] = useState("1")
@@ -46,6 +30,22 @@ function App() {
         });
     }, []);
 
+    useEffect(() => {
+        if (records) {
+            let property = ""
+
+            switch(filter) {
+                case "1": property = "item_name"; break;
+                case "2": property = "brand_name"; break;
+                case "3": property = "category_name"; break;
+                default: property = "item_name";
+            }
+            let regex = new RegExp(query, 'i')
+            let filtered_records = records.filter((r) => regex.test(r[property]))
+            setCurrRecords(filtered_records)
+        }
+    }, [query]);
+
     const handleQueryChange = (e) => {
         setQuery(e.target.value)
     }
@@ -56,8 +56,8 @@ function App() {
 
     const sortColumn = (e) => {
         let records = [...currRecords]
-
-        switch(e.target.innerText) {
+        
+        switch (e.target.parentNode.innerText) {
             case "Item Id": records.sort((a, b) => a["id"] - b["id"]); break;
             case "Item Name": records.sort((a, b) => a["item_name"].localeCompare(b["item_name"])); break;
             case "Brand": records.sort((a, b) => a["brand_name"].localeCompare(b["brand_name"])); break;
@@ -71,8 +71,8 @@ function App() {
         <div className="App">
             <h3 id="page-header">Inventory</h3>
             <SearchBar onQueryChange={handleQueryChange}
-                onFilterChange={handleFilterChange}/>
-            <MainTable headers={headers} data={currRecords} sortFunc={sortColumn}/>
+                onFilterChange={handleFilterChange} />
+            <MainTable headers={headers} data={currRecords} sortFunc={sortColumn} />
         </div>
     );
 }

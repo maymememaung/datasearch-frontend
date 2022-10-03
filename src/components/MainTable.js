@@ -1,4 +1,5 @@
 import Table from 'react-bootstrap/Table';
+import sort_arrows from '../sort-arrows.svg'
 
 export const MainTable = (props) => {
     return (
@@ -7,12 +8,12 @@ export const MainTable = (props) => {
                 <tr className="table-primary">
                     {
                         props.headers ? props.headers.map((header) => {
-                            return <th onClick={props.sortFunc}> {header} </th>
+                            return <th> {header} <img src={sort_arrows} onClick={props.sortFunc}></img></th>
                         }) : null
                     }</tr>
             </thead>
             <tbody>{
-                props.data ? props.data.map((record) => {
+                props.data && props.data.length > 0 ? props.data.map((record) => {
                     return (
                         <tr key={record.id}>{
                             Object.values(record).map((val, i) => {
@@ -20,7 +21,7 @@ export const MainTable = (props) => {
                             })
                         }</tr>
                     )
-                }) : null
+                }) : <tr><td colSpan={5}>No matching records found.</td></tr>
             }</tbody>
         </Table>
     );
