@@ -1,5 +1,7 @@
 import Table from 'react-bootstrap/Table';
-import sort_arrows from '../sort-arrows.svg'
+// import sort_arrows from '../sort-arrows.svg'
+import arrow_up from '../arrow_up.svg'
+import arrow_down from '../arrow_down.svg'
 
 export const MainTable = (props) => {
     return (
@@ -8,7 +10,7 @@ export const MainTable = (props) => {
                 <tr className="table-primary">
                     {
                         props.headers ? props.headers.map((header) => {
-                            return <th> {header} <img src={sort_arrows} onClick={props.sortFunc}></img></th>
+                            return <th> {header} <img src={arrow_up} onClick={props.sortDsc}></img><img src={arrow_down} onClick={props.sortAsc}></img></th>
                         }) : null
                     }</tr>
             </thead>

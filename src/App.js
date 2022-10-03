@@ -44,7 +44,7 @@ function App() {
             let filtered_records = records.filter((r) => regex.test(r[property]))
             setCurrRecords(filtered_records)
         }
-    }, [query]);
+    }, [query, filter]);
 
     const handleQueryChange = (e) => {
         setQuery(e.target.value)
@@ -54,9 +54,9 @@ function App() {
         setFilter(e.target.value)
     }
 
-    const sortColumn = (e) => {
+    const sortAsc = (e) => {
         let records = [...currRecords]
-        
+
         switch (e.target.parentNode.innerText) {
             case "Item Id": records.sort((a, b) => a["id"] - b["id"]); break;
             case "Item Name": records.sort((a, b) => a["item_name"].localeCompare(b["item_name"])); break;
@@ -67,12 +67,25 @@ function App() {
         setCurrRecords(records)
     }
 
+    const sortDsc = (e) => {
+        let records = [...currRecords]
+
+        switch (e.target.parentNode.innerText) {
+            case "Item Id": records.sort((a, b) => b["id"] - a["id"]); break;
+            case "Item Name": records.sort((a, b) => b["item_name"].localeCompare(a["item_name"])); break;
+            case "Brand": records.sort((a, b) => b["brand_name"].localeCompare(a["brand_name"])); break;
+            case "Category": records.sort((a, b) => b["category_name"].localeCompare(a["category_name"])); break;
+            case "Quantity": records.sort((a, b) => b["quantity"] - a["quantity"]); break;
+        }
+        setCurrRecords(records)
+    }
+
     return (
         <div className="App">
             <h3 id="page-header">Inventory</h3>
             <SearchBar onQueryChange={handleQueryChange}
                 onFilterChange={handleFilterChange} />
-            <MainTable headers={headers} data={currRecords} sortFunc={sortColumn} />
+            <MainTable headers={headers} data={currRecords} sortAsc={sortAsc} sortDsc={sortDsc} />
         </div>
     );
 }

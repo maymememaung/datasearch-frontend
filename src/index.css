@@ -59,3 +59,11 @@ code {
     transform: translateY(-50%);
     right: 1vw;
 }
+
+#main-table img:nth-of-type(1) {
+    width: 12px;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    right: 2vw;
+}
