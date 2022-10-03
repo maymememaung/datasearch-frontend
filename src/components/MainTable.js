@@ -7,7 +7,7 @@ export const MainTable = (props) => {
                 <tr className="table-primary">
                     {
                         props.headers ? props.headers.map((header) => {
-                            return <th> {header} </th>
+                            return <th onClick={props.sortFunc}> {header} </th>
                         }) : null
                     }</tr>
             </thead>
