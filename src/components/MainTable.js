@@ -1,35 +1,27 @@
 import Table from 'react-bootstrap/Table';
 
-export const MainTable = () => {
-  return (
-    <Table id="main-table" responsive bordered hover variant='dark' >
-      <thead>
-        <tr className="table-primary">
-          <th>#</th>
-          <th>First Name</th>
-          <th>Last Name</th>
-          <th>Username</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>1</td>
-          <td>Mark</td>
-          <td>Otto</td>
-          <td>@mdo</td>
-        </tr>
-        <tr>
-          <td>2</td>
-          <td>Jacob</td>
-          <td>Thornton</td>
-          <td>@fat</td>
-        </tr>
-        <tr>
-          <td>3</td>
-          <td colSpan={2}>Larry the Bird</td>
-          <td>@twitter</td>
-        </tr>
-      </tbody>
-    </Table>
-  );
+export const MainTable = (props) => {
+    return (
+        <Table id="main-table" responsive bordered hover variant='dark'>
+            <thead>
+                <tr className="table-primary">
+                    {
+                        props.headers ? props.headers.map((header) => {
+                            return <th> {header} </th>
+                        }) : null
+                    }</tr>
+            </thead>
+            <tbody>{
+                props.data ? props.data.map((record) => {
+                    return (
+                        <tr key={record.id}>{
+                            Object.values(record).map((val, i) => {
+                                return <td>{val}</td>
+                            })
+                        }</tr>
+                    )
+                }) : null
+            }</tbody>
+        </Table>
+    );
 }
